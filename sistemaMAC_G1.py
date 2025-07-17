@@ -69,3 +69,32 @@ def menu():
             print("\nOpción no válida. Intente nuevamente.\n")
 
 menu()
+
+# Simulación de base de datos de RENIEC
+RENIEC = {
+    "12345678": {"nombres": "Carlos", "apellidos": "Sánchez", "direccion": "Av. Lima 123", "telefono": "999111222"},
+    "87654321": {"nombres": "Lucía", "apellidos": "Ramírez", "direccion": "Jr. Arequipa 456", "telefono": "988222333"}
+}
+
+# Simulación de OCR desde documento escaneado
+def ocr_simulado():
+    return {
+        "nombres": "NombreOCR",
+        "apellidos": "ApellidoOCR",
+        "direccion": "DireccionOCR",
+        "telefono": "000000000"
+    }
+
+# Clase principal
+class Ciudadano:
+    def __init__(self, dni, nombres, apellidos, direccion, telefono):
+        self.dni = dni
+        self.nombres = nombres
+        self.apellidos = apellidos
+        self.direccion = direccion
+        self.telefono = telefono
+        self.fecha_registro = datetime.datetime.now()
+
+    def mostrar(self):
+        return f"{self.nombres} {self.apellidos} - DNI: {self.dni}\nDirección: {self.direccion} - Tel: {self.telefono}"
+
