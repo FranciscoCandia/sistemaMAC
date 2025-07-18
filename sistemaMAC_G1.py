@@ -1,3 +1,70 @@
+import datetime
+from abc import ABC, abstractmethod
+
+# Clase principal
+class Ciudadano:
+    def __init__(self, dni, nombres, apellidos, direccion, telefono):
+        self.__dni = dni
+        self.__nombres = nombres
+        self.__apellidos = apellidos
+        self.__direccion = direccion
+        self.__telefono = telefono
+        self.__fecha_registro = datetime.datetime.now()
+        self.__atenciones = []
+
+    def agregar_atencion(self, atencion):
+        self.__atenciones.append(atencion)
+
+    def mostrar_historial(self):
+        print("* =============================================== *")
+        print("*               Historial de ciudadano            *")
+        print("* =============================================== *")
+        print(f"DNI: {self.__dni} \nNombre: {self.__nombres} {self.__apellidos}")
+        for at in self.__atenciones:
+            print(f"- {at.obtener_resumen()}")
+
+    def mostrar(self):
+        return f"{self.__nombres} {self.__apellidos} - DNI: {self.__dni} - Dirección: {self.__direccion} - Tel: {self.__telefono}"
+
+class Atencion:
+    def __init__(self, fecha, descripcion, estado):
+        self._fecha = fecha
+        self._descripcion = descripcion
+        self._estado = estado
+
+    @abstractmethod
+    def obtener_resumen(self):
+        pass
+
+class Reclamo(Atencion):
+    def obtener_resumen(self):
+        return f"[{self._fecha}] Reclamo por {self._descripcion} - Estado: {self._estado}"
+
+class Solicitud(Atencion):
+    def obtener_resumen(self):
+        return f"[{self._fecha}] Solicitud de {self._descripcion} - Estado: {self._estado}"
+
+class Queja(Atencion):
+    def obtener_resumen(self):
+        return f"[{self._fecha}] Queja por {self._descripcion} - Estado: {self._estado}"
+
+
+# Simulación de base de datos de RENIEC
+RENIEC = {
+    "12345678": {"nombres": "Carlos", "apellidos": "Sánchez", "direccion": "Av. Lima 123", "telefono": "999111222"},
+    "87654321": {"nombres": "Lucía", "apellidos": "Ramírez", "direccion": "Jr. Arequipa 456", "telefono": "988222333"}
+}
+
+# Simulación de OCR desde documento escaneado
+def ocr_simulado():
+    return {
+        "nombres": "NombreOCR",
+        "apellidos": "ApellidoOCR",
+        "direccion": "DireccionOCR",
+        "telefono": "000000000"
+    }
+
+
 # Menú principal
 def menu():
 
@@ -69,32 +136,3 @@ def menu():
             print("\nOpción no válida. Intente nuevamente.\n")
 
 menu()
-
-# Simulación de base de datos de RENIEC
-RENIEC = {
-    "12345678": {"nombres": "Carlos", "apellidos": "Sánchez", "direccion": "Av. Lima 123", "telefono": "999111222"},
-    "87654321": {"nombres": "Lucía", "apellidos": "Ramírez", "direccion": "Jr. Arequipa 456", "telefono": "988222333"}
-}
-
-# Simulación de OCR desde documento escaneado
-def ocr_simulado():
-    return {
-        "nombres": "NombreOCR",
-        "apellidos": "ApellidoOCR",
-        "direccion": "DireccionOCR",
-        "telefono": "000000000"
-    }
-
-# Clase principal
-class Ciudadano:
-    def __init__(self, dni, nombres, apellidos, direccion, telefono):
-        self.dni = dni
-        self.nombres = nombres
-        self.apellidos = apellidos
-        self.direccion = direccion
-        self.telefono = telefono
-        self.fecha_registro = datetime.datetime.now()
-
-    def mostrar(self):
-        return f"{self.nombres} {self.apellidos} - DNI: {self.dni}\nDirección: {self.direccion} - Tel: {self.telefono}"
-
