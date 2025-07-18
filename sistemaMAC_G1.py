@@ -23,8 +23,41 @@ class Ciudadano:
         for at in self.__atenciones:
             print(f"- {at.obtener_resumen()}")
 
+    def getDNI(self):
+        return self.__dni
+
     def mostrar(self):
         return f"{self.__nombres} {self.__apellidos} - DNI: {self.__dni} - Dirección: {self.__direccion} - Tel: {self.__telefono}"
+
+    def __str__(self):
+        return f"{self.__nombres} {self.__apellidos} - DNI: {self.__dni}\nDirección: {self.__direccion} - Tel: {self.__telefono}"
+      
+class Validador:
+    def validar_datos_personales(self, dni):
+        while True:
+            nombre = input("Nombres: ")
+            if nombre.replace(" ", "").isalpha():
+                break
+            else:
+                print("❌ Solo se permiten letras en el nombre.")
+
+        while True:
+            apellido = input("Apellidos: ")
+            if apellido.replace(" ", "").isalpha():
+                break
+            else:
+                print("❌ Solo se permiten letras en el apellido.")
+
+        direccion = input("Direccion: ")
+
+        while True:
+            telefono = input("Telefono: ")
+            if telefono.isdigit() and len(telefono) == 9:
+                break
+            else:
+                print("❌ El teléfono debe contener solo números y tener 9 dígitos.")
+
+        return Ciudadano(dni, nombre, apellido, direccion, telefono)
 
 class Atencion:
     def __init__(self, fecha, descripcion, estado):
